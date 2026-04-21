@@ -447,6 +447,12 @@ th, td {
   font-size: 13px;
 }
 
+table th:first-child,
+table td:first-child {
+  min-width: 200px;
+  width: 30%;
+}
+
 th {
   color: var(--muted);
   text-transform: uppercase;
