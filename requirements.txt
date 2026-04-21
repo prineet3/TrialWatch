@@ -107,6 +107,7 @@ gmpy2 @ file:///Users/cbousseau/work/recipes/ci_py311/gmpy2_1677937751357/work
 graphviz==0.21
 greenlet @ file:///Users/cbousseau/work/recipes/ci_py311/greenlet_1677926210411/work
 gseapy==1.1.2
+gunicorn==25.3.0
 h5py @ file:///Users/cbousseau/work/recipes/ci_py311/h5py_1677937901660/work
 HeapDict @ file:///Users/ktietz/demo/mc3/conda-bld/heapdict_1630598515714/work
 holoviews @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_f0kn6h75hh/croot/holoviews_1690477580363/work
