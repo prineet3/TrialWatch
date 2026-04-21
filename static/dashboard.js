@@ -123,7 +123,7 @@ function renderOverdueTable(rows) {
     const pct = Math.round((Number(row.max_days_overdue || 0) / maxDays) * 100);
     return `
     <tr>
-      <td><a href="/sponsor/${encodeURIComponent(row.sponsor)}" class="sponsor-link">${row.sponsor || "—"}</a></td>
+      <td><a href="/sponsor/${encodeURIComponent(row.sponsor)}" style="color:#1d2e52;font-weight:600;text-decoration:none;">${row.sponsor || "—"}</a></td>
       <td><span class="class-pill">${row.sponsor_class || "—"}</span></td>
       <td><span class="nc-count">${formatNumber(row.noncompliant_count)}</span></td>
       <td>${formatNumber(row.late_count)}</td>
