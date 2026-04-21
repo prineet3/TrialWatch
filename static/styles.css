@@ -459,7 +459,7 @@ td { color: var(--text); }
 tbody tr:hover td { background: #faf8f4; }
 
 .sponsor-link {
-  color: var(--accent);
+  color: #1d2e52;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.15s;
