@@ -1,3 +1,5 @@
+import os
+import re
 from flask import Flask, jsonify, request, render_template
 from urllib.parse import unquote
 from trialwatch_queries import (
@@ -13,11 +15,10 @@ from trialwatch_queries import (
 
 app = Flask(__name__)
 
-import os
 MONGO_URI = os.getenv("MONGODB_URI")
 db = connect(MONGO_URI)
 
-# ── EXISTING ROUTES (unchanged) ─────────────────────────────────────────────
+# ── EXISTING ROUTES ──────────────────────────────────────────────────────────
 
 @app.route("/")
 def home():
@@ -62,15 +63,16 @@ def api_search_sponsors():
     limit = int(request.args.get("limit", 10))
     return jsonify(search_sponsors(db, q, limit))
 
-# ── NEW: SPONSOR PROFILE PAGE ────────────────────────────────────────────────
+# ── SPONSOR PROFILE PAGE ─────────────────────────────────────────────────────
 
 @app.route("/sponsor/<path:sponsor_name>")
 def sponsor_profile(sponsor_name):
     sponsor_name = unquote(sponsor_name)
 
-    # 1. All trials for this sponsor
+    # 1. All trials for this sponsor (re.escape handles parentheses, dots, etc.)
+    escaped = re.escape(sponsor_name)
     trials = list(db["trials"].find(
-        {"org_name": {"$regex": f"^{sponsor_name}$", "$options": "i"}}
+        {"org_name": {"$regex": f"^{escaped}$", "$options": "i"}}
     ))
 
     if not trials:
@@ -120,10 +122,10 @@ def sponsor_profile(sponsor_name):
         s = m["compliance_status"]
         compliance_counts[s] = compliance_counts.get(s, 0) + 1
 
-    late      = compliance_counts.get("LATE", 0)
-    missing   = compliance_counts.get("MISSING", 0)
-    compliant = compliance_counts.get("COMPLIANT", 0)
-    not_due   = compliance_counts.get("NOT_DUE_YET", 0)
+    late         = compliance_counts.get("LATE", 0)
+    missing      = compliance_counts.get("MISSING", 0)
+    compliant    = compliance_counts.get("COMPLIANT", 0)
+    not_due      = compliance_counts.get("NOT_DUE_YET", 0)
     noncompliant = late + missing
 
     total_ae      = sum(m["ae_count"] or 0 for m in merged)
