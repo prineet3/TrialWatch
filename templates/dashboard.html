@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrialWatch — Clinical Trial Compliance Intelligence</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="tw-nav">
+    <a href="/" class="tw-logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="TrialWatch" class="tw-logo-img" />
+    </a>
+    <div class="tw-nav-search">
+      <div class="search-input-wrap">
+        <svg class="search-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input id="sponsorSearch" type="text" placeholder="Search by sponsor name, e.g. Pfizer" />
+      </div>
+      <button id="searchBtn" type="button">Search</button>
+    </div>
+    <div class="tw-nav-links">
+      <a class="tw-nav-link active" href="/">Dashboard</a>
+      <span class="tw-nav-badge">BETA</span>
+    </div>
+  </nav>
+
+  <!-- SEARCH RESULTS DROPDOWN -->
+  <div class="nav-search-results" id="searchResultsWrap">
+    <div id="searchResults"></div>
+  </div>
+
+  <main class="page-shell">
+
+    <!-- HERO -->
+    <section class="hero-center">
+      <p class="hero-kicker">Clinical Trial Compliance Intelligence</p>
+      <h1>TrialWatch</h1>
+      <p class="hero-tagline">Turning clinical trial noncompliance into visible, actionable risk for researchers, journalists, and regulators.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- KPI STRIP -->
+    <section class="kpi-strip">
+      <div class="kpi-cell">
+        <span class="kpi-label">Total ACT Trials</span>
+        <strong id="totalTrials">—</strong>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">Non-compliant (Late + Missing)</span>
+        <strong id="noncompliantTrials" class="red">—</strong>
+        <small id="pctNoncompliant"></small>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">NIH $ at risk</span>
+        <strong id="dollarsAtRisk">—</strong>
+        <small>From risk enrichment</small>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">AE reports linked</span>
+        <strong id="aeLinked">—</strong>
+        <small>From risk enrichment</small>
+      </div>
+    </section>
+
+    <section class="mode-strip">
+      <span id="viewModeLabel">Viewing: All sponsors</span>
+      <span id="selectedSponsorLabel" class="muted"></span>
+    </section>
+
+    <!-- CHARTS -->
+    <section class="chart-grid">
+      <article class="panel">
+        <div class="panel-head"><h2>Compliance Status Distribution</h2></div>
+        <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Top Overdue Sponsors</h2></div>
+        <div class="chart-wrap"><canvas id="overdueChart"></canvas></div>
+      </article>
+    </section>
+
+    <!-- TABLE -->
+    <section class="panel table-panel">
+      <div class="panel-head"><h2>Top Overdue Sponsors</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sponsor</th>
+              <th>Class</th>
+              <th>Noncompliant</th>
+              <th>Late</th>
+              <th>Missing</th>
+              <th>Max overdue</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="overdueTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="tw-footer">
+    <span>TrialWatch · Clinical Trial Compliance Intelligence</span>
+    <span>Compliance data from ClinicalTrials.gov FDAAA ACT dataset · Updated monthly</span>
+  </footer>
+
+  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
