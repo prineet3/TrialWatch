@@ -195,15 +195,6 @@ Danger scores (0–100) are assigned via log normalization of adverse event coun
 | Docker Compose Kafka | AWS MSK managed Kafka |
 
 ---
-
-## Team
-
-APAN5400 Data Engineering · Group 8 · Columbia University · Spring 2026
-
-Each team member contributed to ingestion, processing, storage, and the live dashboard deployment.
-
----
-
 ## License
 
 All underlying data is federally mandated and publicly licensed. This codebase is for academic use.
