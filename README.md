@@ -4,6 +4,8 @@
 > Turning clinical trial noncompliance into visible, actionable risk.
 
 **Live at:** [trialwatch-flask.onrender.com](https://trialwatch-flask.onrender.com)  
+**Course:** APAN5400 Data Engineering · Prof. Amreeta Choudhury · Spring 2026 · Group 8
+
 ---
 
 ## What It Does
@@ -73,27 +75,28 @@ trialwatch_flask/
 ├── README.md
 ├── .gitignore
 ├── requirements.txt
-├── render.yaml
+├── Procfile                          # Gunicorn start command for Render
+├── app.py                            # Flask app — all routes and sponsor profile logic
+├── trialwatch_queries.py             # 7 reusable MongoDB query functions
 │
-├── app/                          # Flask application
-│   ├── __init__.py
-│   ├── routes.py                 # 6 routes: dashboard, 4 APIs, sponsor profiles
-│   ├── trialwatch_queries.py     # 7 reusable MongoDB query functions
-│   ├── templates/                # Jinja2 HTML templates
-│   └── static/                   # CSS, JS, Chart.js assets
+├── app/                              # Frontend assets
+│   ├── static/                       # CSS, JS (dashboard.js), logo
+│   └── templates/                    # Jinja2 HTML templates
+│       ├── dashboard.html
+│       ├── sponsor_profile.html
+│       └── sponsor_not_found.html
 │
-├── pipeline/                     # Data processing scripts
-│   ├── 01_ingestion/             # PySpark: ClinicalTrials → trialsclean.csv
-│   ├── 02_enrichment/            # FAERS matching + NIH funding lookup
-│   └── 03_mongodb_load/          # PyMongo CSV loader
+├── notebooks/                        # Google Colab pipeline notebooks
+│   ├── step1_ingestion.ipynb         # PySpark: 581K → 132K ACTs + compliance classification
+│   └── step2_enrichment.ipynb        # FAERS matching + NIH funding + danger scoring
 │
-├── notebooks/                    # Google Colab notebooks (.ipynb)
-│
-├── data/                         # Gitignored — CSVs too large for GitHub
-│   └── .gitkeep
+├── data/                             # Pipeline output CSVs
+│   ├── trialsclean.csv               # 132,185 filtered ACT trials
+│   ├── compliancemetrics.csv         # Compliance status per trial
+│   └── risk_enrichment.csv          # Danger scores + NIH funding per trial
 │
 └── docs/
-    └── architecture.png
+    └── TrialWatch_Final_Presentation.pdf
 ```
 
 ---
@@ -195,6 +198,7 @@ Danger scores (0–100) are assigned via log normalization of adverse event coun
 | Docker Compose Kafka | AWS MSK managed Kafka |
 
 ---
+
 ## License
 
 All underlying data is federally mandated and publicly licensed. This codebase is for academic use.
