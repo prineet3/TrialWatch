@@ -4,7 +4,6 @@
 > Turning clinical trial noncompliance into visible, actionable risk.
 
 **Live at:** [trialwatch-flask.onrender.com](https://trialwatch-flask.onrender.com)  
-**Course:** APAN5400 Data Engineering · Prof. Amreeta Choudhury · Spring 2026 · Group 8
 
 ---
 
